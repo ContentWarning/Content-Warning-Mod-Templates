@@ -8,7 +8,7 @@
 !.editorconfig
 !.github
 !content
-!Xilophor.LCModTemplates.csproj
+!Xilophor.ContentWarningTemplates.csproj
 
 #Remove Files
 **/bin
