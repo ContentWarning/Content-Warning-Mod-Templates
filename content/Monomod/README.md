@@ -1,4 +1,4 @@
-# Lethal Company Mod Template
+# Content Warning Harmony Template
 
 Thank you for using the mod template! Here are a few tips to help you on your journey:
 

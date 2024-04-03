@@ -1,4 +1,4 @@
-# Lethal Company Mod Template
+# Content Warning Harmony Template
 
 Thank you for using the mod template! Here are a few tips to help you on your journey:
 
@@ -78,7 +78,7 @@ Then in that class, you can use
 <!--#else -->
 `[HarmonyPatch(typeof(ClassToPatch), "MethodToPatch")]`
 <!--#endif -->
-where `ClassToPatch` is the class you're patching (ie `TVScript`), and `MethodToPatch` is the method you're patching (ie `SwitchTVLocalClient`).
+where `ClassToPatch` is the class you're patching (ie `ShoppingCart`), and `MethodToPatch` is the method you're patching (ie `AddItemToCart`).
 
 Then you can use
 [the appropriate prefix, postfix, transpiler, or finalizer](https://harmony.pardeike.net/articles/patching.html) attribute.
@@ -87,37 +87,42 @@ _While you can use_ `return false;` _in a prefix patch,
 it is **HIGHLY DISCOURAGED** as it can **AND WILL** cause compatibility issues with other mods._
 
 For example, we want to add a patch that will debug log the current players' position.
-We have the following postfix patch patching the `SwitchTVLocalClient` method
-in `TVScript`:
+We have the following postfix patch patching the `AddItemToCart` method
+in `ShoppingCart`:
 
 ```csharp
+using System;
+using System.Reflection;
 using HarmonyLib;
 
 namespace Harmony._ModTemplate.Patches;
 
-[HarmonyPatch(typeof(TVScript))]
-public class ExampleTVPatch
+[HarmonyPatch(typeof(ShoppingCart))]
+public class ExampleShoppingCartPatch
 {
 <!--#if (PublicizeGameAssemblies) -->
-    [HarmonyPatch(nameof(TVScript.SwitchTVLocalClient))]
+    [HarmonyPatch(nameof(ShoppingCart.AddItemToCart))]
 <!--#else -->
-    [HarmonyPatch("SwitchTVLocalClient")]
+    [HarmonyPatch("AddItemToCart")]
 <!--#endif -->
-    [HarmonyPrefix]
-    private static void SwitchTvPrefix(TVScript __instance)
+    [HarmonyPostfix]
+    private static void AddItemToCartPostfix(ShoppingCart __instance)
     {
+<!--#if (PublicizeGameAssemblies) -->
+        __instance.CartValue += new Random().Next(0, 100);
+<!--#else -->
         /*
-         *  When the method is called, the TV will be turning off when we want to
-         *  turn the lights on and vice-versa. At that time, the TV's tvOn field
-         *  will be the opposite of what it's doing, ie it'll be on when turning off.
-         *  So, we want to set the lights to what the tv's state was
-         *  when this method is called.
+         * Adding a random value to the visible price of the shopping cart (not actual) is slightly complicated
+         * due to the private setter of the CartValue property. So to change the value, we must get the setter
+         * via reflection, and call it with the new value.
          */
-        StartOfRound.Instance.shipRoomLights.SetShipLightsBoolean(__instance.tvOn);
+        AccessTools.PropertySetter(typeof(ShoppingCart), "CartValue").Invoke(ShoppingCart.CartValue + new Random().Next(0, 100));
+<!--#endif -->
     }
 }
+
 ```
 
 In this case we include the type of the class we're patching in the attribute
-before our `ExampleTVPatch` class,
-as our class will only patch the `TVScript` class.
+before our `ExampleShoppingCartPatch` class,
+as our class will only patch the `ShoppingCart` class.

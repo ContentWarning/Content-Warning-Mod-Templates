@@ -2,9 +2,9 @@
     "$schema": "http://json.schemastore.org/template",
     "author": "Xilophor",
     "classifications": [ "Lethal Company", "Mod", "BepInEx", "Monomod" ],
-    "identity": "Xilophor.LC.MonoModTemplate",
-    "name": "Lethal Company Monomod Mod Template",
-    "shortName": [ "lcmmod", "lcmonomod" ],
+    "identity": "Xilophor.ContentWarning.MonoMod",
+    "name": "Content Warning MonoMod Mod Template",
+    "shortName": [ "cwmonomod" ],
     "sourceName": "MonoMod.ModTemplate",
     "tags": {
         "language": "C#",
@@ -79,72 +79,6 @@
             },
             "replaces": "{ModGuid}"
         },
-        "LobbyCompatibility": {
-            "type": "parameter",
-            "description": "Whether to use lobby compatibility or not.",
-            "datatype": "bool",
-            "defaultValue": "true"
-        },
-        "CompatibilityLevel": {
-            "type": "parameter",
-            "description": "The compatibility level of the mod.",
-            "datatype": "choice",
-            "choices": [
-                {
-                    "choice": "ClientOnly",
-                    "description": "Mod only impacts the client. Mod is not checked at all, VersionStrictness does not apply.",
-                    "displayName": "Client Only"
-                },
-                {
-                    "choice": "ServerOnly",
-                    "description": "Mod only impacts the server, and might implicitly impact the client without the client needing to have it installed for it to work. Mod is only required by the server. VersionStrictness only applies if the mod is installed on the client.",
-                    "displayName": "Server Only"
-                },
-                {
-                    "choice": "Everyone",
-                    "description": "Mod impacts both the client and the server, and adds functionality that requires the mod to be installed on both. Mod must be loaded on server and client. Version checking depends on the VersionStrictness.",
-                    "displayName": "Everyone"
-                },
-                {
-                    "choice": "ClientOptional",
-                    "description": "Not every client needs to have the mod installed, but if it is installed, the server also needs to have it. Generally used for mods that add extra (optional) functionality to the client if the server has it installed. Mod must be loaded on server. Version checking depends on the VersionStrictness.",
-                    "displayName": "Client Optional"
-                }
-            ],
-            "enableQuotelessLiterals": true,
-            "defaultValue": "ClientOnly",
-            "replaces": "{CompatibilityLevel}"
-        },
-        "VersionStrictness": {
-            "type": "parameter",
-            "description": "The version strictness of the mod.",
-            "datatype": "choice",
-            "choices": [
-                {
-                    "choice": "None",
-                    "description": "No version check is done (x.x.x)",
-                    "displayName": "None"
-                },
-                {
-                    "choice": "Major",
-                    "description": "Mod must have the same Major version (1.x.x)",
-                    "displayName": "Major"
-                },
-                {
-                    "choice": "Minor",
-                    "description": "Mods must have the same Minor and Major version (1.1.x)",
-                    "displayName": "Minor"
-                },
-                {
-                    "choice": "Patch",
-                    "description": "Mods must have the same Patch, Minor, and Major version (1.1.1)",
-                    "displayName": "Patch"
-                }
-            ],
-            "enableQuotelessLiterals": true,
-            "defaultValue": "None",
-            "replaces": "{VersionStrictness}"
-        },
         "MMHOOKLocation": {
             "type": "parameter",
             "description": "The file path of the MMHOOK folder, for using the HookGen (On.x & IL.x). This is typically located in your (profile) plugin folder.",
@@ -212,12 +146,6 @@
             "description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub).",
             "datatype": "bool",
             "defaultValue": "false"
-        },
-        "UseNetcodePatcher": {
-            "type": "parameter",
-            "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
-            "datatype": "bool",
-            "defaultValue": "false"
         }
     },
     "sources": [
@@ -228,8 +156,6 @@
                 ".template.config/**/*",
                 "**/*.filelist",
                 "**/*.lock.json",
-                "**/*.cmd",
-                "**/*.sh",
                 "**/*.user"
             ],
             "modifiers": [
@@ -238,69 +164,11 @@
                     "include": [
                         "**.user"
                     ]
-                },
-                {
-                    "condition": "UseNetcodePatcher",
-                    "include": [
-                        "install-netcode-patcher.*"
-                    ]
-                },
-                {
-                    "condition": "OS != \"Windows_NT\"",
-                    "exclude": [
-                        "**.cmd"
-                    ]
-                },
-                {
-                    "condition": "OS == \"Windows_NT\"",
-                    "exclude": [
-                        "**.sh"
-                    ]
                 }
             ]
         }
     ],
     "postActions": [
-        {
-            "condition": "(OS != \"Windows_NT\") && (UseNetcodePatcher)",
-            "description": "Make scripts executable",
-            "manualInstructions": [{
-                "text": "Run 'chmod +x *.sh'"
-            }],
-            "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
-            "args": {
-                "+x": "*.sh"
-            },
-            "continueOnError": true
-        },
-        {
-            "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-            "condition": "(UseNetcodePatcher) && (OS != \"Windows_NT\")",
-            "args": {
-                "executable": "install-netcode-patcher.sh",
-                "redirectStandardOutput": false,
-                "redirectStandardError": false
-            },
-            "manualInstructions": [{
-                "text": "Run 'install-netcode-patcher.sh'"
-            }],
-            "continueOnError": false,
-            "description ": "Sets up Netcode Patcher by running install-netcode-patcher.sh"
-        },
-        {
-            "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-            "condition": "(UseNetcodePatcher) && (OS == \"Windows_NT\")",
-            "args": {
-                "executable": "install-netcode-patcher.cmd",
-                "redirectStandardOutput": false,
-                "redirectStandardError": false
-            },
-            "manualInstructions": [{
-                "text": "Run 'install-netcode-patcher.cmd'"
-            }],
-            "continueOnError": false,
-            "description ": "Sets up Netcode Patcher by running install-netcode-patcher.cmd"
-        },
         {
             "description": "Add projects to solution",
             "manualInstructions": [ { "text": "Add generated project to solution manually." } ],

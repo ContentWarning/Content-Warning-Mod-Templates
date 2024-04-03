@@ -1,29 +1,16 @@
 using BepInEx;
 using BepInEx.Logging;
 using MonoMod._ModTemplate.Patches;
-#if (UseNetcodePatcher || MMHOOKLocation == "")
-using System.Reflection;
-#endif
 #if (MMHOOKLocation == "")
+using System.Reflection;
 using System.Collections.Generic;
 using MonoMod.RuntimeDetour;
 #endif
 using HarmonyLib;
-#if (UseNetcodePatcher)
-using UnityEngine;
-#endif
-#if (LobbyCompatibility)
-using LobbyCompatibility.Attributes;
-using LobbyCompatibility.Enums;
-#endif
 
 namespace MonoMod._ModTemplate;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-#if (LobbyCompatibility)
-[BepInDependency("BMX.LobbyCompatibility", BepInDependency.DependencyFlags.HardDependency)]
-[LobbyCompatibility(CompatibilityLevel.{CompatibilityLevel}, VersionStrictness.{VersionStrictness})]
-#endif
 public class MonoMod__ModTemplate : BaseUnityPlugin
 {
     public static MonoMod__ModTemplate Instance { get; private set; } = null!;
@@ -37,9 +24,6 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
         Logger = base.Logger;
         Instance = this;
 
-#if (UseNetcodePatcher)
-        NetcodePatcher();
-#endif
         Hook();
 
         Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
@@ -68,15 +52,15 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
          */
 
 #if (MMHOOKLocation != "")
-        On.TVScript.SwitchTVLocalClient += ExampleTVPatch.SwitchTVPatch;
+        On.ShoppingCart.AddItemToCart += ExampleShoppingCartPatch.AddItemToCartPostfix;
 #else
         Hooks.Add(new Hook(
 #if (PublicizeGameAssemblies)
-                typeof(TVScript).GetMethod(nameof(TVScript.SwitchTVLocalClient), AccessTools.allDeclared),
+                typeof(ShoppingCart).GetMethod(nameof(ShoppingCart.AddItemToCart), AccessTools.allDeclared),
 #else
-                typeof(TVScript).GetMethod("SwitchTVLocalClient", AccessTools.allDeclared),
+                typeof(ShoppingCart).GetMethod("AddItemToCart", AccessTools.allDeclared),
 #endif
-                ExampleTVPatch.SwitchTVPatch));
+                ExampleShoppingCartPatch.AddItemToCartPostfix));
 #endif
 
         Logger.LogDebug("Finished Hooking!");
@@ -91,7 +75,7 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
          *  Unsubscribe with 'On.Class.Method -= CustomClass.CustomMethod;' for each method you're patching.
          */
 
-        On.TVScript.SwitchTVLocalClient -= ExampleTVPatch.SwitchTVPatch;
+        On.ShoppingCart.AddItemToCart -= ExampleShoppingCartPatch.AddItemToCartPostfix;
 #else
         foreach (var detour in Hooks)
             detour.Undo();
@@ -100,23 +84,4 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
 
         Logger.LogDebug("Finished Unhooking!");
     }
-#if (UseNetcodePatcher)
-
-    private void NetcodePatcher()
-    {
-        var types = Assembly.GetExecutingAssembly().GetTypes();
-        foreach (var type in types)
-        {
-            var methods = type.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-            foreach (var method in methods)
-            {
-                var attributes = method.GetCustomAttributes(typeof(RuntimeInitializeOnLoadMethodAttribute), false);
-                if (attributes.Length > 0)
-                {
-                    method.Invoke(null, null);
-                }
-            }
-        }
-    }
-#endif
 }
