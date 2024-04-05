@@ -79,18 +79,19 @@
             },
             "replaces": "{ModGuid}"
         },
-        "MMHOOKLocation": {
+        "PluginsDirectory": {
             "type": "parameter",
-            "description": "The file path of the MMHOOK folder, for using the HookGen (On.x & IL.x). This is typically located in your (profile) plugin folder.",
+            "description": "The file path of the plugins folder, for using the HookGen (On.x & IL.x) and copying the plugin for quick testing. This is typically located in your profile folder if you're using r2modman or Thunderstore.",
             "datatype": "text",
+            "isRequired": true,
             "defaultValue": ""
         },
-        "MMHOOKLocationReplacer": {
+        "PluginsDirectoryReplacer": {
             "type": "generated",
             "generator": "regex",
             "datatype": "text",
             "parameters": {
-                "source": "MMHOOKLocation",
+                "source": "PluginsDirectory",
                 "steps": [
                     {
                         "regex": "/.*[^/]$",
@@ -102,20 +103,20 @@
                     }
                 ]
             },
-            "replaces": "{MMHOOKDir}"
+            "replaces": "{PluginsDirectory}"
         },
-        "BepInExPluginLocation": {
+        "GameDirectory": {
             "type": "parameter",
-            "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied.",
+            "description": "The file path of the main Content Warning folder, for referencing assemblies from the game.",
             "datatype": "text",
             "defaultValue": ""
         },
-        "BepInExPluginLocationReplacer": {
+        "GameDirectoryReplacer": {
             "type": "generated",
             "generator": "regex",
             "datatype": "text",
             "parameters": {
-                "source": "BepInExPluginLocation",
+                "source": "GameDirectory",
                 "steps": [
                     {
                         "regex": "/.*[^/]$",
@@ -127,11 +128,11 @@
                     }
                 ]
             },
-            "replaces": "{PluginDirectory}"
+            "replaces": "{GameDirectory}"
         },
         "ReferenceGameLibsPackage": {
             "type": "parameter",
-            "description": "Use the GameLibs NuGet Package to avoid manually referencing game files.",
+            "description": "Use the GameLibs NuGet Package to avoid manually referencing game files. If you fill the game directory field, this will only apply for Continous Integration.",
             "datatype": "bool",
             "defaultValue": "true"
         },
@@ -140,6 +141,18 @@
             "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
             "datatype": "bool",
             "defaultValue": "false"
+        },
+        "UseHookGen": {
+            "type": "parameter",
+            "description": "Use HookGen to easily hook into the game. Only disable if you know what you are doing.",
+            "datatype": "bool",
+            "defaultValue": "true"
+        },
+        "CopyPluginOnBuild": {
+            "type": "parameter",
+            "description": "Whether the built assembly should be copied to your plugins directory after building.",
+            "datatype": "bool",
+            "defaultValue": "true"
         },
         "UseMinVer": {
             "type": "parameter",
@@ -155,16 +168,7 @@
                 "**/[Oo]bj/**",
                 ".template.config/**/*",
                 "**/*.filelist",
-                "**/*.lock.json",
-                "**/*.user"
-            ],
-            "modifiers": [
-                {
-                    "condition": "BepInExPluginLocation != \"\" || MMHOOKLocation != \"\"",
-                    "include": [
-                        "**.user"
-                    ]
-                }
+                "**/*.lock.json"
             ]
         }
     ],

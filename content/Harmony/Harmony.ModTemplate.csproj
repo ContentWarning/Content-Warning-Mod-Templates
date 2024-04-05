@@ -74,12 +74,12 @@
 <!--#endif -->
         <PackageReference Include="BepInEx.Core" Version="5.*" PrivateAssets="all"/>
         <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" PrivateAssets="all"/>
-<!--#if (ReferenceGameLibsPackage && PublicizeGameAssemblies) -->
-        <PackageReference Include="ContentWarning.Libs" Version="*" Publicize="true" PrivateAssets="all"/>
-<!--#elseif (ReferenceGameLibsPackage) -->
-        <PackageReference Include="ContentWarning.Libs" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="UnityEngine.Modules" Version="2022.3.10" PrivateAssets="all"/>
+<!--#if (ReferenceGameLibsPackage && PublicizeGameAssemblies && GameDirectory == "") -->
+        <PackageReference Include="ContentWarning.GameLibs.Steam" Version="*-*" Publicize="true" PrivateAssets="all"/>
+<!--#elseif (ReferenceGameLibsPackage && GameDirectory == "") -->
+        <PackageReference Include="ContentWarning.GameLibs.Steam" Version="*-*" PrivateAssets="all"/>
 <!--#endif -->
-        <PackageReference Include="UnityEngine.Modules" Version="2022.3.10" IncludeAssets="compile" PrivateAssets="all"/>
 <!--#if (UseMinVer) -->
         <PackageReference Include="MinVer" Version="4.*" PrivateAssets="all"/>
 <!--#endif -->
@@ -90,4 +90,32 @@
         <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all"/>
     </ItemGroup>
 <!--/+:msbuild-conditional:noEmit -->
+<!--#if (GameDirectory != "") -->
+
+    <!-- References - Game Assemblies -->
+<!--#if (ReferenceGameLibsPackage) -->
+    <ItemGroup Condition="$(CI) != 'true'">
+<!--#else -->
+    <ItemGroup>
+<!--#endif -->
+<!--#if (PublicizeGameAssemblies) -->
+        <Reference Include="Assembly-CSharp" Publicize="true" Private="false">
+<!--#else -->
+        <Reference Include="Assembly-CSharp" Private="false">
+<!--#endif -->
+            <HintPath>$(ManagedDirectory)Assembly-CSharp.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+<!--#if (ReferenceGameLibsPackage) -->
+
+    <!-- Package References - Game Assemblies -->
+    <ItemGroup Condition="$(CI) == 'true'">
+<!--#if (PublicizeGameAssemblies) -->
+        <PackageReference Include="ContentWarning.GameLibs.Steam" Version="*-*" Publicize="true" PrivateAssets="all"/>
+<!--#else -->
+        <PackageReference Include="ContentWarning.GameLibs.Steam" Version="*-*" PrivateAssets="all"/>
+<!--#endif -->
+    </ItemGroup>
+<!--#endif -->
+<!--#endif -->
 </Project>

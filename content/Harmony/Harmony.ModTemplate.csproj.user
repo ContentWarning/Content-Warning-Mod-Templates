@@ -1,11 +1,25 @@
 <Project>
     <!-- Custom Variables -->
     <PropertyGroup>
-        <PluginDirectory>{PluginDirectory}</PluginDirectory>
+<!--#if (GameDirectory != "") -->
+        <GameDirectory>{GameDirectory}</GameDirectory>
+<!--#endif -->
+<!--#if (PluginsDirectory != "") -->
+        <PluginsDirectory>{PluginsDirectory}</PluginsDirectory>
+<!--#endif -->
     </PropertyGroup>
+<!--#if (GameDirectory != "") -->
+
+    <!-- Game Directory -->
+    <PropertyGroup>
+        <ManagedDirectory>$(GameDirectory)Content Warning_Data/Managed/</ManagedDirectory>
+    </PropertyGroup>
+<!--#endif -->
+<!--#if (PluginsDirectory != "") -->
 
     <!-- Copy to Plugin Directory for Quicker Testing -->
     <Target Name="CopyFiles" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginDirectory)"/>
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginsDirectory)"/>
     </Target>
+<!--#endif -->
 </Project>

@@ -1,21 +1,21 @@
 using BepInEx;
 using BepInEx.Logging;
-using MonoMod._ModTemplate.Patches;
-#if (MMHOOKLocation == "")
-using System.Reflection;
+#if (!UseHookGen)
 using System.Collections.Generic;
 using MonoMod.RuntimeDetour;
-#endif
 using HarmonyLib;
+#endif
 
 namespace MonoMod._ModTemplate;
+
+using Hooks;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 public class MonoMod__ModTemplate : BaseUnityPlugin
 {
     public static MonoMod__ModTemplate Instance { get; private set; } = null!;
     internal new static ManualLogSource Logger { get; private set; } = null!;
-#if (MMHOOKLocation == "")
+#if (!UseHookGen)
     internal static List<IDetour> Hooks { get; set; } = new List<IDetour>();
 #endif
 
@@ -51,7 +51,7 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
 #endif
          */
 
-#if (MMHOOKLocation != "")
+#if (UseHookGen)
         On.ShoppingCart.AddItemToCart += ExampleShoppingCartPatch.AddItemToCartPostfix;
 #else
         Hooks.Add(new Hook(
@@ -70,7 +70,7 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
     {
         Logger.LogDebug("Unhooking...");
 
-#if (MMHOOKLocation != "")
+#if (UseHookGen)
         /*
          *  Unsubscribe with 'On.Class.Method -= CustomClass.CustomMethod;' for each method you're patching.
          */

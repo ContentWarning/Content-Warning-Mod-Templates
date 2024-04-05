@@ -1,18 +1,34 @@
 <Project>
-    <!-- Custom Variables -->
+    <!-- Local Variables -->
     <PropertyGroup>
-<!--#if (BepInExPluginLocation != "") -->
-        <CopyToDirectory>{PluginDirectory}</CopyToDirectory>
+<!--#if (GameDirectory != "") -->
+        <GameDirectory>.../Content Warning/</GameDirectory>
 <!--#endif -->
-<!--#if (MMHOOKLocation != "") -->
-        <MMHOOKDirectory>{MMHOOKDir}</MMHOOKDirectory>
-<!--#endif -->
+        <PluginsDirectory>.../Content Warning/BepInEx/plugins/</PluginsDirectory>
     </PropertyGroup>
-<!--#if (BepInExPluginLocation != "") -->
+<!--#if (GameDirectory != "") -->
+
+    <!-- Game Directories - Do Not Modify -->
+    <PropertyGroup>
+        <ManagedDirectory>$(GameDirectory)Content Warning_Data/Managed/</ManagedDirectory>
+    </PropertyGroup>
+<!--#endif -->
+<!--#if (UseHookGen) -->
+
+    <!-- MMMHOOK Directories - Do Not Modify -->
+    <PropertyGroup>
+        <MMHOOK>$(PluginsDirectory)MMHOOK/</MMHOOK>
+        <MMHOOKManaged>$(MMHOOK)Managed/</MMHOOKManaged>
+        <MMHOOKplugins>$(MMHOOK)plugins/</MMHOOKplugins>
+        <MMHOOKpatchers>$(MMHOOK)patchers/</MMHOOKpatchers>
+        <MMHOOKcore>$(MMHOOK)core/</MMHOOKcore>
+    </PropertyGroup>
+<!--#endif -->
+<!--#if (CopyPluginOnBuild) -->
 
     <!-- Copy to Plugin Directory for Quicker Testing -->
     <Target Name="CopyFiles" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(CopyToDirectory)"/>
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginsDirectory)"/>
     </Target>
 <!--#endif -->
 </Project>

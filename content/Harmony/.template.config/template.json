@@ -79,18 +79,18 @@
             "defaultValue": "1.0.0",
             "replaces": "{Version}"
         },
-        "BepInExPluginLocation": {
+        "PluginsDirectory": {
             "type": "parameter",
-            "description": "The file path of the plugin or profile directory to copy to for quick testing. If left blank, the mod will not be copied.",
+            "description": "The file path of the plugins folder, for copying the plugin for quick testing.",
             "datatype": "text",
             "defaultValue": ""
         },
-        "BepInExPluginLocationReplacer": {
+        "PluginsDirectoryReplacer": {
             "type": "generated",
             "generator": "regex",
             "datatype": "text",
             "parameters": {
-                "source": "BepInExPluginLocation",
+                "source": "PluginsDirectory",
                 "steps": [
                     {
                         "regex": "/.*[^/]$",
@@ -102,7 +102,32 @@
                     }
                 ]
             },
-            "replaces": "{PluginDirectory}"
+            "replaces": "{PluginsDirectory}"
+        },
+        "GameDirectory": {
+            "type": "parameter",
+            "description": "The file path of the main Content Warning folder, for referencing assemblies from the game.",
+            "datatype": "text",
+            "defaultValue": ""
+        },
+        "GameDirectoryReplacer": {
+            "type": "generated",
+            "generator": "regex",
+            "datatype": "text",
+            "parameters": {
+                "source": "GameDirectory",
+                "steps": [
+                    {
+                        "regex": "/.*[^/]$",
+                        "replacement": "$&/"
+                    },
+                    {
+                        "regex": "\\\\.*[^\\\\]$",
+                        "replacement": "$&\\"
+                    }
+                ]
+            },
+            "replaces": "{GameDirectory}"
         },
         "ReferenceGameLibsPackage": {
             "type": "parameter",
@@ -131,13 +156,11 @@
                 ".template.config/**/*",
                 "**/*.filelist",
                 "**/*.lock.json",
-                "**/*.cmd",
-                "**/*.sh",
                 "**/*.user"
             ],
             "modifiers": [
                 {
-                    "condition": "BepInExPluginLocation != \"\"",
+                    "condition": "GameDirectory != \"\" || PluginsDirectory != \"\"",
                     "include": [
                         "**.user"
                     ]
