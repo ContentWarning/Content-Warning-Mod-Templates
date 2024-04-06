@@ -1,0 +1,120 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Xilophor",
+    "classifications": [ "Content Warning", "Mod", "BepInEx", "GitHub" ],
+    "identity": "Xilophor.ContentWarning.GitHub",
+    "name": "Content Warning GitHub Workflows Template",
+    "shortName": [ "cwgithub" ],
+    "sourceName": "{ModName}",
+    "tags": {
+        "language": "yaml",
+        "type": "item"
+    },
+    "symbols": {
+        "Author": {
+            "type": "parameter",
+            "description": "The author name the mod will be uploaded under. For example, \"xilophor\" would be valid. Note: You need the API key from the Author/Namespace to be able to upload.",
+            "isRequired": true,
+            "replaces": "{Author}"
+        },
+        "Description": {
+            "type": "parameter",
+            "description": "The description of the mod. This will appear below the mod name.",
+            "replaces": "{Description}",
+            "defaultValue": "A mod for Content Warning."
+        },
+        "WebsiteUrl": {
+            "type": "parameter",
+            "description": "A website to link to, visible on the mod listing. Most commonly used to link to the GitHub repo.",
+            "replaces": "{WebsiteUrl}",
+            "defaultValue": ""
+        },
+        "Nsfw": {
+            "type": "parameter",
+            "description": "Whether the mod is NSFW or not.",
+            "datatype": "bool",
+            "defaultValue": false
+        },
+        "DependOnHookGen": {
+            "type": "parameter",
+            "description": "Whether your mod requires AutoHookGenPatcher. This is usually the case when you are using MonoMod.",
+            "datatype": "bool",
+            "defaultValue": false
+        },
+        "SolutionREADME": {
+            "type": "parameter",
+            "description": "Set to true if the README is in the Solution folder, and false if the README is in the project folder.",
+            "datatype": "bool",
+            "defaultValue": true
+        },
+        "HasLicense": {
+            "type": "parameter",
+            "description": "Whether your project has a LICENSE file or not. The LICENSE file MUST be in the solution folder, not the project folder.",
+            "datatype": "bool",
+            "defaultValue": false
+        },
+        "UseChangelog": {
+            "type": "parameter",
+            "description": "Whether you want to use a CHANGELOG file.",
+            "datatype": "bool",
+            "defaultValue": false
+        },
+        "CreateChangelog": {
+            "type": "parameter",
+            "description": "Create a CHANGELOG file to use. Dependent on UseChangelog",
+            "datatype": "bool",
+            "defaultValue": false
+        },
+        "ProjectName": {
+            "type": "bind",
+            "binding": "msbuild:Product",
+            "replaces": "{ProjectName}",
+            "defaultValue": "ExampleMod"
+        },
+        "Framework": {
+            "type": "bind",
+            "binding": "msbuild:TargetFramework",
+            "replaces": "{Framework}",
+            "defaultValue": "netstandard2.1"
+        },
+        "AssemblyName": {
+            "type": "bind",
+            "binding": "msbuild:AssemblyName",
+            "replaces": "{AssemblyName}",
+            "defaultValue": "ExampleMod"
+        }
+    },
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "condition": "CreateChangelog == false || UseChangelog == false",
+                    "exclude": [
+                        "**/CHANGELOG.md"
+                    ]
+                }
+            ]
+        }
+    ],
+    "specialCustomOperations": {
+        "**.toml": {
+            "operations": [
+                {
+                    "type": "conditional",
+                    "configuration": {
+                        "if": [ "#if" ],
+                        "else": [ "#else" ],
+                        "elseif": [ "#elseif" ],
+                        "endif": [ "#endif" ],
+                        "actionableIf": [ "##if" ],
+                        "actionableElse": [ "##else" ],
+                        "actionableElseif": [ "##elseif" ],
+                        "trim": true,
+                        "wholeLine": true,
+                        "evaluator": "C++"
+                    }
+                }
+            ]
+        }
+    }
+}
