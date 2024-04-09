@@ -2,9 +2,9 @@
     <!-- Local Variables -->
     <PropertyGroup>
 <!--#if (GameDirectory != "") -->
-        <GameDirectory>.../Content Warning/</GameDirectory>
+        <GameDirectory>%AppData%/Steam/steamapps/Common/Content Warning/</GameDirectory>
 <!--#endif -->
-        <PluginsDirectory>.../Content Warning/BepInEx/plugins/</PluginsDirectory>
+        <PluginsDirectory>%AppData%/Steam/steamapps/Common/Content Warning/BepInEx/plugins/</PluginsDirectory>
     </PropertyGroup>
 <!--#if (GameDirectory != "") -->
 

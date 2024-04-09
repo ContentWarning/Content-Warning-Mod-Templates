@@ -23,8 +23,28 @@
         }
     },
     "symbols": {
+        "NamespaceReplacer": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "namespace",
+            "replaces": "Harmony._ModTemplate"
+        },
+        "ClassnameReplacer": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "classname",
+            "replaces": "Harmony__ModTemplate",
+            "fileRename": "Harmony__ModTemplate"
+        },
+        "IdentityReplacer": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "identity",
+            "replaces": "{Product}"
+        },
         "ModGuid": {
             "type": "parameter",
+            "displayName": "Mod Guid",
             "description": "The global identifier specific to your mod. (Ex. username.ModName)",
             "datatype": "text"
         },
@@ -52,27 +72,9 @@
             },
             "replaces": "{ModGuid}"
         },
-        "NamespaceReplacer": {
-            "type": "derived",
-            "valueSource": "name",
-            "valueTransform": "namespace",
-            "replaces": "Harmony._ModTemplate"
-        },
-        "ClassnameReplacer": {
-            "type": "derived",
-            "valueSource": "name",
-            "valueTransform": "classname",
-            "replaces": "Harmony__ModTemplate",
-            "fileRename": "Harmony__ModTemplate"
-        },
-        "IdentityReplacer": {
-            "type": "derived",
-            "valueSource": "name",
-            "valueTransform": "identity",
-            "replaces": "{Product}"
-        },
         "Version": {
             "type": "parameter",
+            "displayName": "Version",
             "description": "The initial version of your mod, in semantic versioning. (Ex. 1.0.0)",
             "datatype": "text",
             "isEnabled": "!UseMinVer",
@@ -81,7 +83,8 @@
         },
         "PluginsDirectory": {
             "type": "parameter",
-            "description": "The file path of the plugins folder, for copying the plugin for quick testing.",
+            "displayName": "Plugins Directory",
+            "description": "The file path of the plugins folder, for copying the plugin for quick testing. This is typically located in your profile folder if you're using r2modman or Thunderstore.",
             "datatype": "text",
             "defaultValue": ""
         },
@@ -106,6 +109,7 @@
         },
         "GameDirectory": {
             "type": "parameter",
+            "displayName": "Game Directory",
             "description": "The file path of the main Content Warning folder, for referencing assemblies from the game.",
             "datatype": "text",
             "defaultValue": ""
@@ -131,18 +135,21 @@
         },
         "ReferenceGameLibsPackage": {
             "type": "parameter",
-            "description": "Use the GameLibs NuGet Package to avoid manually referencing game files.",
+            "displayName": "Reference GameLibs Package",
+            "description": "Use the GameLibs NuGet Package to avoid manually referencing game files. If you fill the game directory field, this will only apply for Continous Integration.",
             "datatype": "bool",
             "defaultValue": "true"
         },
         "PublicizeGameAssemblies": {
             "type": "parameter",
+            "displayName": "Publicize Game Assemblies",
             "description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
             "datatype": "bool",
             "defaultValue": "false"
         },
         "UseMinVer": {
             "type": "parameter",
+            "displayName": "Use MinVer",
             "description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub).",
             "datatype": "bool",
             "defaultValue": "false"
@@ -170,7 +177,8 @@
     ],
     "postActions": [
         {
-            "description": "Add projects to solution",
+            "id": "AddToSolution",
+            "description": "Add projects to solution.",
             "manualInstructions": [ { "text": "Add generated project to solution manually." } ],
             "args": {
                 "solutionFolder": "src",
