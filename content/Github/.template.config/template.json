@@ -65,6 +65,12 @@
             "datatype": "bool",
             "defaultValue": false
         },
+        "UploadDebugBuild" : {
+            "type": "parameter",
+            "description": "Whether a Debug build should be uploaded to the GitHub release. Only useful if you have any \"#if (DEBUG)\" preprocessing directives.",
+            "datatype": "bool",
+            "defaultValue": false
+        },
         "ProjectName": {
             "type": "bind",
             "binding": "msbuild:Product",
@@ -86,6 +92,14 @@
     },
     "sources": [
         {
+            "exclude": [
+                "**/[Bb]in/**",
+                "**/[Oo]bj/**",
+                ".template.config/**/*",
+                ".github/**/*",
+                "**/*.filelist",
+                "**/*.lock.json"
+            ],
             "modifiers": [
                 {
                     "condition": "CreateChangelog == false || UseChangelog == false",
@@ -94,6 +108,10 @@
                     ]
                 }
             ]
+        },
+        {
+            "source": "./.github/",
+            "target": "../.github/"
         }
     ],
     "specialCustomOperations": {

@@ -80,7 +80,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: thunderstore-build
-          path: {ProjectName}/dist/*.zip
+          path: {ProjectName}/dist
 
       - name: Restore Tools
         run: |
