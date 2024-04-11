@@ -8,12 +8,17 @@
         <PluginsDirectory>{PluginsDirectory}</PluginsDirectory>
 <!--#endif -->
     </PropertyGroup>
-<!--#if (GameDirectory != "") -->
+<!--#if (GameDirectory != "" && IsWindows) -->
 
     <!-- Game Directories - Do Not Modify -->
     <PropertyGroup>
-        <DataDirectory>$(GameDirectory)Content Warning_Data/</DataDirectory>
-        <ManagedDirectory>$(DataDirectory)Managed/</ManagedDirectory>
+        <ManagedDirectory>$(DataDirectory)Content Warning_Data\Managed\</ManagedDirectory>
+    </PropertyGroup>
+<!--#elseif (GameDirectory != "") -->
+
+    <!-- Game Directories - Do Not Modify -->
+    <PropertyGroup>
+        <ManagedDirectory>$(DataDirectory)Content Warning_Data/Managed/</ManagedDirectory>
     </PropertyGroup>
 <!--#endif -->
 <!--#if (PluginsDirectory != "") -->

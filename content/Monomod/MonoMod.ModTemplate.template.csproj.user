@@ -2,16 +2,15 @@
     <!-- Local Variables -->
     <PropertyGroup>
 <!--#if (GameDirectory != "") -->
-        <GameDirectory>%AppData%/Steam/steamapps/Common/Content Warning/</GameDirectory>
+        <GameDirectory>%programfiles(x86)%/Steam/steamapps/Common/Content Warning/</GameDirectory>
 <!--#endif -->
-        <PluginsDirectory>%AppData%/Steam/steamapps/Common/Content Warning/BepInEx/plugins/</PluginsDirectory>
+        <PluginsDirectory>%programfiles(x86)%/Steam/steamapps/Common/Content Warning/BepInEx/plugins/</PluginsDirectory>
     </PropertyGroup>
 <!--#if (GameDirectory != "") -->
 
     <!-- Game Directories - Do Not Modify -->
     <PropertyGroup>
-        <DataDirectory>$(GameDirectory)Content Warning_Data/</DataDirectory>
-        <ManagedDirectory>$(DataDirectory)Managed/</ManagedDirectory>
+        <ManagedDirectory>$(GameDirectory)Content Warning_Data/Managed/</ManagedDirectory>
     </PropertyGroup>
 <!--#endif -->
 <!--#if (UseHookGen) -->

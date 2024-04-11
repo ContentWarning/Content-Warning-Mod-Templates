@@ -48,13 +48,6 @@
     </PropertyGroup>
 
 <!--#endif -->
-<!--#if (PublicizeGameAssemblies) -->
-    <!-- Disable Publicizer Warnings -->
-    <PropertyGroup>
-        <NoWarn>$(NoWarn);CS0436</NoWarn>
-    </PropertyGroup>
-
-<!--#endif -->
     <!-- Embed Debug Symbols for Easier Debugging -->
     <PropertyGroup>
         <DebugSymbols>true</DebugSymbols>
@@ -70,7 +63,7 @@
     <ItemGroup>
         <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
 <!--#if (PublicizeGameAssemblies) -->
-        <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all"/>
+        <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.*" PrivateAssets="all"/>
 <!--#endif -->
         <PackageReference Include="BepInEx.Core" Version="5.*" PrivateAssets="all"/>
         <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" PrivateAssets="all"/>

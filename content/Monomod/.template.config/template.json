@@ -43,6 +43,10 @@
             "valueTransform": "identity",
             "replaces": "{Product}"
         },
+        "IsWindows": {
+            "type": "computed",
+            "value": "OS == \"Windows_NT\""
+        },
         "ModGuid": {
             "type": "parameter",
             "displayName": "Mod Guid",
