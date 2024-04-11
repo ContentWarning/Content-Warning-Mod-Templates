@@ -43,13 +43,7 @@
         },
         "UseChangelog": {
             "type": "parameter",
-            "description": "Whether you want to use a CHANGELOG file.",
-            "datatype": "bool",
-            "defaultValue": false
-        },
-        "CreateChangelog": {
-            "type": "parameter",
-            "description": "Create a CHANGELOG file to use. Dependent on UseChangelog",
+            "description": "Whether you want to use a CHANGELOG file. Will be created if true.",
             "datatype": "bool",
             "defaultValue": false
         },
@@ -169,7 +163,7 @@
             "target": "../",
             "modifiers": [
                 {
-                    "condition": "CreateChangelog == false || UseChangelog == false",
+                    "condition": "UseChangelog == false",
                     "exclude": [
                         "**/CHANGELOG.md"
                     ]
