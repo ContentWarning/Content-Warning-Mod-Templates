@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using MonoMod.RuntimeDetour;
 using HarmonyLib;
 #endif
+using MonoMod._ModTemplate.Hooks;
 
 namespace MonoMod._ModTemplate;
-
-using Hooks;
 
 #if (VanillaCompatible)
 [ContentWarningPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_VERSION, true)]
