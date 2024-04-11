@@ -4,6 +4,7 @@
     "classifications": [ "Content Warning", "Mod", "BepInEx", "Harmony" ],
     "identity": "Xilophor.ContentWarning.Harmony",
     "name": "Content Warning Harmony Mod Template",
+    "description": "A mod template for mods using the HarmonyX code injection lib.",
     "shortName": [ "cwharmony" ],
     "sourceName": "Harmony.ModTemplate",
     "tags": {
@@ -180,19 +181,6 @@
                     ]
                 }
             ]
-        }
-    ],
-    "postActions": [
-        {
-            "id": "AddToSolution",
-            "description": "Add projects to solution.",
-            "manualInstructions": [ { "text": "Add generated project to solution manually." } ],
-            "args": {
-                "solutionFolder": "src",
-                "projectFiles": [ "Harmony.ModTemplate.csproj" ]
-            },
-            "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
-            "continueOnError": true
         }
     ]
 }

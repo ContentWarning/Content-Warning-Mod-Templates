@@ -10,12 +10,12 @@
     "symbols/PluginsDirectory/description": "The file path of the plugins folder, for copying the plugin for quick testing. This is typically located in your profile folder if you're using r2modman or Thunderstore.",
     "symbols/GameDirectory/displayName": "Game Directory",
     "symbols/GameDirectory/description": "The file path of the main Content Warning folder, for referencing assemblies from the game.",
+    "symbols/VanillaCompatible/displayName": "Vanilla Compatible",
+    "symbols/VanillaCompatible/description": "Set the vanilla compatibility. Setting false will disable matchmaking with vanilla clients, but will allow you to spawn custom network objects.",
     "symbols/ReferenceGameLibsPackage/displayName": "Reference GameLibs Package",
     "symbols/ReferenceGameLibsPackage/description": "Use the GameLibs NuGet Package to avoid manually referencing game files. If you fill the game directory field, this will only apply for Continuous Integration.",
     "symbols/PublicizeGameAssemblies/displayName": "Publicize Game Assemblies",
     "symbols/PublicizeGameAssemblies/description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
     "symbols/UseMinVer/displayName": "Use MinVer",
-    "symbols/UseMinVer/description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub).",
-    "postActions/AddToSolution/description": "Add projects to solution.",
-    "postActions/AddToSolution/manualInstructions": "Add generated project to solution manually."
+    "symbols/UseMinVer/description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub)."
 }
