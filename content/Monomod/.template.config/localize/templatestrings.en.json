@@ -21,5 +21,5 @@
     "symbols/UseMinVer/displayName": "Use MinVer",
     "symbols/UseMinVer/description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub).",
     "postActions/AddToSolution/description": "Add projects to solution.",
-    "postActions/AddToSolution/manualInstructions/text": "Add generated project to solution manually."
+    "postActions/AddToSolution/manualInstructions": "Add generated project to solution manually."
 }

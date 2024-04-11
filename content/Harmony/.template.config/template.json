@@ -133,6 +133,13 @@
             },
             "replaces": "{GameDirectory}"
         },
+        "VanillaCompatible": {
+            "type": "parameter",
+            "displayName": "Vanilla Compatible",
+            "description": "Set the vanilla compatibility. Setting false will disable matchmaking with vanilla clients, but will allow you to spawn custom network objects.",
+            "datatype": "bool",
+            "defaultValue": "false"
+        },
         "ReferenceGameLibsPackage": {
             "type": "parameter",
             "displayName": "Reference GameLibs Package",

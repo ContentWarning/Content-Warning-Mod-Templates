@@ -10,6 +10,11 @@ namespace MonoMod._ModTemplate;
 
 using Hooks;
 
+#if (VanillaCompatible)
+[ContentWarningPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_VERSION, true)]
+#else
+[ContentWarningPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_VERSION, false)]
+#endif
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 public class MonoMod__ModTemplate : BaseUnityPlugin
 {

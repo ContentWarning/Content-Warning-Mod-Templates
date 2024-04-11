@@ -1,7 +1,7 @@
 {
     "$schema": "http://json.schemastore.org/template",
     "author": "Xilophor",
-    "classifications": [ "Lethal Company", "Mod", "BepInEx", "Monomod" ],
+    "classifications": [ "Content Warning", "Mod", "BepInEx", "Monomod" ],
     "identity": "Xilophor.ContentWarning.MonoMod",
     "name": "Content Warning MonoMod Mod Template",
     "shortName": [ "cwmonomod" ],
@@ -133,6 +133,13 @@
                 ]
             },
             "replaces": "{GameDirectory}"
+        },
+        "VanillaCompatible": {
+            "type": "parameter",
+            "displayName": "Vanilla Compatible",
+            "description": "Set the vanilla compatibility. Setting false will disable matchmaking with vanilla clients, but will allow you to spawn custom network objects.",
+            "datatype": "bool",
+            "defaultValue": "false"
         },
         "ReferenceGameLibsPackage": {
             "type": "parameter",

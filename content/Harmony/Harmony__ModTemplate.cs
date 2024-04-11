@@ -4,6 +4,11 @@ using HarmonyLib;
 
 namespace Harmony._ModTemplate;
 
+#if (VanillaCompatible)
+[ContentWarningPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_VERSION, true)]
+#else
+[ContentWarningPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_VERSION, false)]
+#endif
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 public class Harmony__ModTemplate : BaseUnityPlugin
 {

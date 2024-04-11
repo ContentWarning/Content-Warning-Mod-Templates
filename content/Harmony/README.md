@@ -86,7 +86,7 @@ Then you can use
 _While you can use_ `return false;` _in a prefix patch,
 it is **HIGHLY DISCOURAGED** as it can **AND WILL** cause compatibility issues with other mods._
 
-For example, we want to add a patch that will debug log the current players' position.
+For example, we want to add a patch that will add a random amount to the total value of items in the cart upon adding an item.
 We have the following postfix patch patching the `AddItemToCart` method
 in `ShoppingCart`:
 
@@ -116,7 +116,7 @@ public class ExampleShoppingCartPatch
          * due to the private setter of the CartValue property. So to change the value, we must get the setter
          * via reflection, and call it with the new value.
          */
-        AccessTools.PropertySetter(typeof(ShoppingCart), "CartValue").Invoke(ShoppingCart.CartValue + new Random().Next(0, 100));
+        AccessTools.PropertySetter(typeof(ShoppingCart), "CartValue").Invoke(__instance, ShoppingCart.CartValue + new Random().Next(0, 100));
 <!--#endif -->
     }
 }
