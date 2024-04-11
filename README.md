@@ -28,3 +28,86 @@ For a detailed overview of terminal/commandline options, use either `cwharmony -
 dotnet new cwharmony --help
 dotnet new cwmonomod --help
 ```
+
+There is also a GitHub workflow template, though it is not available through any UX/UI; it is strictly command-line only. This template also requires a fair amount
+of post template set-up.
+
+The template is available running the following ***in your project directory***:
+
+```shell
+dotnet new cwgithub
+```
+
+> [!IMPORTANT]
+>
+> This template assumes you are using MinVer and have a `README.md` file in the root of the repo (next to the `sln` file). Failing to do meet these prerequisites will
+> lead to the template not working correctly.
+>
+> For MinVer, please use the `UseMinVer` setting in the Harmony/MonoMod Template. Otherwise, you can add the following to your `csproj`:
+>
+> ```xml
+> <!-- Set MinVer Tag & Prerelease Properties -->
+> <PropertyGroup>
+>   <MinVerDefaultPreReleaseIdentifiers>dev</MinVerDefaultPreReleaseIdentifiers>
+>   <MinVerTagPrefix>v</MinVerTagPrefix>
+> </PropertyGroup>
+> 
+> <!-- Set Mod Version with MinVer -->
+> <Target Name="SetModVersion" BeforeTargets="AddGeneratedFile" DependsOnTargets="MinVer">
+>   <PropertyGroup>
+>     <PlainVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</PlainVersion>
+>     <BepInExPluginVersion>$(PlainVersion)</BepInExPluginVersion>
+>   </PropertyGroup>
+> </Target>
+> ```
+
+The GitHub Workflow has quite a few parameters, listed below:
+
+`-n`: The Mod Name
+  - Self-Explanatory
+  - Default: The project name.
+
+`-A`: Author ***required***
+  - The author name the mod will be uploaded under. For example, "xilophor" would be valid. Note: You need the API key from the Author/Namespace to be able to upload.
+
+`-D`: Description
+  - The description of the mod. This will appear below the mod name.
+  - Default: `"A mod for Content Warning."`
+
+`-W`: Website Url
+  - A website to link to, visible on the mod listing. Most commonly used to link to the GitHub repo.
+
+`-N`: NSFW
+  - Whether the mod is NSFW or not.
+  - Default: `false`
+
+`-De`: Depend On AutoHookGenPatcher
+  - Whether your mod requires AutoHookGenPatcher. This is usually the case when you are using MonoMod.
+  - Default: `false`
+
+`-U`: Use a Changleog
+  - Whether you want to use a CHANGELOG file. Will be created if true.
+  - Default: `false`
+
+`-Nu`: NuGet Packaging
+  - Whether you are packaging your mod to be uploaded to NuGet. Should only be used for APIs/libs.
+  - Default: `false`
+
+`-Up`: Upload Debug Build
+  - Whether a Debug build should be uploaded to the GitHub release. Only useful if you have any "#if (DEBUG)" preprocessing directives.
+  - Default: `false`
+
+`-L`: License
+  - What LICENSE you use. This will be automatically added to the solution directory and used for NuGet packaging.
+  - Default: `None`
+  - Choices:
+    - `None`
+    - `MIT`
+    - `GPL-3.0-only`
+    - `LGPL-3.0-only`
+    - `AGPL-3.0-only`
+    - `MPL-2.0`
+    - `Apache-2.0`
+    - `CC-BY-NC-4.0`
+    - `CC-BY-NC-SA-4.0`
+  
