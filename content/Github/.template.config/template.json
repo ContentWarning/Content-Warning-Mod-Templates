@@ -41,18 +41,6 @@
             "datatype": "bool",
             "defaultValue": false
         },
-        "SolutionREADME": {
-            "type": "parameter",
-            "description": "Set to true if the README is in the Solution folder, and false if the README is in the project folder.",
-            "datatype": "bool",
-            "defaultValue": true
-        },
-        "HasLicense": {
-            "type": "parameter",
-            "description": "Whether your project has a LICENSE file or not. The LICENSE file MUST be in the solution folder, not the project folder.",
-            "datatype": "bool",
-            "defaultValue": false
-        },
         "UseChangelog": {
             "type": "parameter",
             "description": "Whether you want to use a CHANGELOG file.",
@@ -65,17 +53,83 @@
             "datatype": "bool",
             "defaultValue": false
         },
+        "NuGetPackaging" : {
+            "type": "parameter",
+            "description": "Whether you are packaging your mod to be uploaded to NuGet. Should only be used for APIs/libs.",
+            "datatype": "bool",
+            "defaultValue": false
+        },
         "UploadDebugBuild" : {
             "type": "parameter",
             "description": "Whether a Debug build should be uploaded to the GitHub release. Only useful if you have any \"#if (DEBUG)\" preprocessing directives.",
             "datatype": "bool",
             "defaultValue": false
         },
+        "License": {
+            "type": "parameter",
+            "description": "What LICENSE you use. This will be automatically added to the solution directory and used for NuGet packaging.",
+            "datatype": "choice",
+            "enableQuotelessLiterals": true,
+            "choices": [
+                { "choice": "None", "displayName": "None" },
+                { "choice": "MIT", "displayName": "MIT License" },
+                { "choice": "GPL-3.0-only", "displayName": "GNU General Public License v3" },
+                { "choice": "LGPL-3.0-only", "displayName": "GNU Lesser General Public License v3" },
+                { "choice": "AGPL-3.0-only", "displayName": "GNU Affero General Public License v3" },
+                { "choice": "MPL-2.0", "displayName": "Mozilla Public License v2.0" },
+                { "choice": "Apache-2.0", "displayName": "Apache License, Version 2.0" },
+                { "choice": "CC-BY-NC-4.0", "displayName": "Creative Commons Non-Commercial Attribution Licenses, Version 4.0" },
+                { "choice": "CC-BY-NC-SA-4.0", "displayName": "Creative Commons Non-Commercial Share-Alike Attribution Licenses, Version 4.0" }
+            ],
+            "replaces": "{LicenseExp}",
+            "defaultValue": "None"
+        },
+        "NoLicense": {
+            "type": "computed",
+            "value": "(License == None)"
+        },
+        "MITLicense": {
+            "type": "computed",
+            "value": "(License == MIT)"
+        },
+        "GPLLicense": {
+            "type": "computed",
+            "value": "(License == GPL-3.0-only)"
+        },
+        "LGPLLicense": {
+            "type": "computed",
+            "value": "(License == LGPL-3.0-only)"
+        },
+        "AGPLLicense": {
+            "type": "computed",
+            "value": "(License == AGPL-3.0-only)"
+        },
+        "MPLLicense": {
+            "type": "computed",
+            "value": "(License == MPL-2.0)"
+        },
+        "ApacheLicense": {
+            "type": "computed",
+            "value": "(License == Apache-2.0)"
+        },
+        "CC-BY-NCLicense": {
+            "type": "computed",
+            "value": "(License == CC-BY-NC-4.0)"
+        },
+        "CC-BY-NC-SALicense": {
+            "type": "computed",
+            "value": "(License == CC-BY-NC-SA-4.0)"
+        },
+        "OpenSource": {
+            "type": "computed",
+            "value": "(MITLicense || GPLLicense || LGPLLicense || AGPLLicense || MPLLicense || ApacheLicense)"
+        },
         "ProjectName": {
             "type": "bind",
             "binding": "msbuild:Product",
             "replaces": "{ProjectName}",
-            "defaultValue": "ExampleMod"
+            "defaultValue": "ExampleMod",
+            "fileRename": "{ProjectName}"
         },
         "Framework": {
             "type": "bind",
@@ -96,10 +150,23 @@
                 "**/[Bb]in/**",
                 "**/[Oo]bj/**",
                 ".template.config/**/*",
-                ".github/**/*",
+                "**/root/**",
+                "licenses/**",
                 "**/*.filelist",
                 "**/*.lock.json"
             ],
+            "modifiers": [
+                {
+                    "condition": "NuGetPackaging == false",
+                    "exclude": [
+                        "**/icon_128x128.png"
+                    ]
+                }
+            ]
+        },
+        {
+            "source": "./root/",
+            "target": "../",
             "modifiers": [
                 {
                     "condition": "CreateChangelog == false || UseChangelog == false",
@@ -110,8 +177,29 @@
             ]
         },
         {
-            "source": "./.github/",
-            "target": "../.github/"
+            "source": "./licenses/",
+            "target": "../",
+            "exclude": "**/*",
+            "modifiers": [
+                { "condition": "MITLicense", "include": [ "**/MIT.*" ] },
+                { "condition": "GPLLicense", "include": [ "**/GPL.*" ] },
+                { "condition": "LGPLLicense", "include": [ "**/LGPL.*" ] },
+                { "condition": "AGPLLicense", "include": [ "**/AGPL.*" ] },
+                { "condition": "MPLLicense", "include": [ "**/MPL.*" ] },
+                { "condition": "ApacheLicense", "include": [ "**/Apache.*" ] },
+                { "condition": "CC-BY-NCLicense", "include": [ "**/CC-BY-NC.*" ] },
+                { "condition": "CC-BY-NC-SALicense", "include": [ "**/CC-BY-NC-SA.*" ] }
+            ],
+            "rename": {
+                "MIT.LICENSE": "LICENSE",
+                "GPL.LICENSE": "LICENSE",
+                "LGPL.LICENSE": "LICENSE",
+                "AGPL.LICENSE": "LICENSE",
+                "MPL.LICENSE": "LICENSE",
+                "Apache.LICENSE": "LICENSE",
+                "CC-BY-NC.LICENSE.txt": "LICENSE.txt",
+                "CC-BY-NC-SA.LICENSE.txt": "LICENSE.txt"
+            }
         }
     ],
     "specialCustomOperations": {

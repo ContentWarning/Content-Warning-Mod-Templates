@@ -24,14 +24,10 @@ Hamunii-AutoHookGenPatcher = "1.0.2"
 
 [build]
 icon = "icon.png"
-#if (SolutionREADME)
 readme = "../../README.md"
-#else
-readme = "../README.md"
-#endif
 outdir = "../dist"
 
-#if (License)
+#if (!NoLicense)
 [[build.copy]]
 source = "../../LICENSE"
 target = "/"
@@ -39,7 +35,7 @@ target = "/"
 #endif
 #if (Changelog)
 [[build.copy]]
-source = "./CHANGELOG.md"
+source = "../../CHANGELOG.md"
 target = "/"
 
 #endif

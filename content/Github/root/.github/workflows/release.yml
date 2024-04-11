@@ -1,4 +1,4 @@
-name: Publish
+name: Release
 
 on:
   release:
@@ -38,6 +38,14 @@ jobs:
         with:
           name: thunderstore-build
           path: {ProjectName}/dist/*.zip
+#if (NuGetPackaging)
+
+      - name: Upload NuPkg Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nupkg-build
+          path: {ProjectName}/bin/Release/*.nupkg
+#endif
 #if (UploadDebugBuild)
 
       - name: Rename Debug Build
@@ -63,11 +71,40 @@ jobs:
       - name: Upload artifacts to Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#if (UploadDebugBuild)
+#if (NuGetPackaging && UploadDebugBuild)
+        run: gh release upload ${{ github.event.release.tag_name }} thunderstore-build/*.zip nupkg-build/*.nupkg debug-build/*.dll
+#elseif (UploadDebugBuild)
         run: gh release upload ${{ github.event.release.tag_name }} thunderstore-build/*.zip debug-build/*.dll
+#elseif (NuGetPackaging)
+        run: gh release upload ${{ github.event.release.tag_name }} thunderstore-build/*.zip nupkg-build/*.nupkg
 #else
         run: gh release upload ${{ github.event.release.tag_name }} thunderstore-build/*.zip
-#end
+#endif
+#if (NuGetPackaging)
+
+  deploy-nuget:
+    name: Deploy to NuGet
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Download nupkg artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nupkg-build
+          path: {ProjectName}/bin/Release
+
+      - name: Setup .NET environment
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.203"
+
+      - name: Publish to NuGet.org
+        run: |
+          dotnet nuget push {ProjectName}/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+#endif
 
   deploy-thunderstore:
     if: ${{ github.event.release.prerelease == false }}

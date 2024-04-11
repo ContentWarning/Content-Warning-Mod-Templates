@@ -1,0 +1,47 @@
+<Project>
+<!--#if (NuGetPackaging) -->
+    <PropertyGroup>
+        <PackageId>{AssemblyName}</PackageId>
+        <Title>{ModName}</Title>
+        <Authors>{Author}</Authors>
+        <PackageTags>contentwarning; content; warning</PackageTags>
+
+        <PackageIcon>icon_128x128.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+<!--#if (OpenSourceLicense) -->
+        <PackageLicenseExpression>{LicenseExp}</PackageLicenseExpression>
+<!--#elseif (!NoLicense) -->
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+<!--#endif -->
+<!--#if (WebsiteUrl != "") -->
+
+        <PackageProjectUrl>{WebsiteUrl}</PackageProjectUrl>
+        <RepositoryUrl>{WebsiteUrl}</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+<!--#endif -->
+    </PropertyGroup>
+
+    <!-- NuPkg Includes -->
+    <ItemGroup>
+        <None Include="$(ProjectDir)../README.md" Pack="true" PackagePath="/" />
+<!--#if (!OpenSourceLicense && !NoLicense) -->
+        <None Include="$(ProjectDir)../LICENSE.txt" Pack="true" PackagePath="/" />
+<!--#endif -->
+        <None Include="$(ProjectDir)ts-assets/icon_128x128.png" Pack="true" PackagePath="/" />
+    </ItemGroup>
+
+<!--#endif -->
+    <!-- Pack for Thunderstore -->
+    <Target
+        Name="ThunderstorePack"
+        AfterTargets="PostBuildEvent"
+        Condition="$(Configuration) == 'Release' and $(CI) == 'true'"
+        DependsOnTargets="SetModVersion"
+    >
+        <Exec Command="dotnet tcli build --config-path $(ProjectDir)ts-assets/thunderstore.toml --package-version $(PlainVersion)" />
+        <ItemGroup>
+            <FilesToRename Include="$(ProjectDir)dist/*-$(PlainVersion).zip" />
+        </ItemGroup>
+        <Move SourceFiles="@(FilesToRename)" DestinationFiles="@(FilesToRename -&gt; Replace($(PlainVersion), $(MinVerVersion)))" />
+    </Target>
+</Project>

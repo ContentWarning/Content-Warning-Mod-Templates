@@ -39,6 +39,14 @@ jobs:
         with:
           name: thunderstore-build
           path: {ProjectName}/dist/*.zip
+#if (NuGetPackaging)
+
+      - name: Upload NuPkg Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nupkg-build
+          path: {ProjectName}/bin/Release/*.nupkg
+#endif
 #if (UploadDebugBuild)
 
       - name: Rename Debug Build
