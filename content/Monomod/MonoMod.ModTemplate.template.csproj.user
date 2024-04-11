@@ -10,7 +10,8 @@
 
     <!-- Game Directories - Do Not Modify -->
     <PropertyGroup>
-        <ManagedDirectory>$(GameDirectory)Content Warning_Data/Managed/</ManagedDirectory>
+        <DataDirectory>$(GameDirectory)Content Warning_Data/</DataDirectory>
+        <ManagedDirectory>$(DataDirectory)Managed/</ManagedDirectory>
     </PropertyGroup>
 <!--#endif -->
 <!--#if (UseHookGen) -->
