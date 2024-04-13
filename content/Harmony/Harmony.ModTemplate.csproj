@@ -92,12 +92,10 @@
     <ItemGroup>
 <!--#endif -->
 <!--#if (PublicizeGameAssemblies) -->
-        <Reference Include="Assembly-CSharp" Publicize="true" Private="false">
+        <Reference Include="$(ManagedDirectory)Assembly-CSharp.dll" Publicize="true" Private="false"/>
 <!--#else -->
-        <Reference Include="Assembly-CSharp" Private="false">
+        <Reference Include="$(ManagedDirectory)Assembly-CSharp.dll" Private="false"/>
 <!--#endif -->
-            <HintPath>$(ManagedDirectory)Assembly-CSharp.dll</HintPath>
-        </Reference>
     </ItemGroup>
 <!--#if (ReferenceGameLibsPackage) -->
 
