@@ -10,13 +10,13 @@
 
     <!-- Game Directories - Do Not Modify -->
     <PropertyGroup>
-        <ManagedDirectory>$(DataDirectory)Content Warning_Data\Managed\</ManagedDirectory>
+        <ManagedDirectory>$(GameDirectory)Content Warning_Data\Managed\</ManagedDirectory>
     </PropertyGroup>
 <!--#elseif (GameDirectory != "") -->
 
     <!-- Game Directories - Do Not Modify -->
     <PropertyGroup>
-        <ManagedDirectory>$(DataDirectory)Content Warning_Data/Managed/</ManagedDirectory>
+        <ManagedDirectory>$(GameDirectory)Content Warning_Data/Managed/</ManagedDirectory>
     </PropertyGroup>
 <!--#endif -->
 <!--#if (UseHookGen && IsWindows) -->
