@@ -4,6 +4,10 @@ Harmony & MonoMod templates to get you a quick-start with making Content Warning
 
 This template is forked from Xilophor's LC Mod Templates, [available here](https://github.com/Xilophor/Lethal-Company-Mod-Templates).
 
+## Acknowledgements
+
+* [@funlennysub](https://github.com/funlennysub) for the Russian localization.
+
 ## Installation
 
 Use the following command in the commandline or terminal to install the templates:
@@ -29,6 +33,8 @@ dotnet new cwharmony --help
 dotnet new cwmonomod --help
 ```
 
+### GitHub Workflow Template
+
 There is also a GitHub workflow template, though it is not available through any UX/UI; it is strictly command-line only. This template also requires a fair amount
 of post template set-up.
 
@@ -51,7 +57,7 @@ dotnet new cwgithub
 >   <MinVerDefaultPreReleaseIdentifiers>dev</MinVerDefaultPreReleaseIdentifiers>
 >   <MinVerTagPrefix>v</MinVerTagPrefix>
 > </PropertyGroup>
-> 
+>
 > <!-- Set Mod Version with MinVer -->
 > <Target Name="SetModVersion" BeforeTargets="AddGeneratedFile" DependsOnTargets="MinVer">
 >   <PropertyGroup>
@@ -110,4 +116,7 @@ The GitHub Workflow has quite a few parameters, listed below:
     - `Apache-2.0`
     - `CC-BY-NC-4.0`
     - `CC-BY-NC-SA-4.0`
-  
+
+## Contributing
+
+If you'd like to add a localization, please contact me at [ryanzgit@pm.me](mailto:ryanzgit@pm.me).
