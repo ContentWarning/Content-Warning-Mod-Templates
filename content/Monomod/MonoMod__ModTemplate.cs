@@ -56,7 +56,7 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
          */
 
 #if (UseHookGen)
-        On.ShoppingCart.AddItemToCart += ExampleShoppingCartPatch.AddItemToCartPostfix;
+        On.ShoppingCart.AddItemToCart += ExampleShoppingCartPatch.AddItemToCart;
 #else
         Hooks.Add(new Hook(
 #if (PublicizeGameAssemblies)
@@ -64,7 +64,7 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
 #else
                 typeof(ShoppingCart).GetMethod("AddItemToCart", AccessTools.allDeclared),
 #endif
-                ExampleShoppingCartPatch.AddItemToCartPostfix));
+                ExampleShoppingCartPatch.AddItemToCart));
 #endif
 
         Logger.LogDebug("Finished Hooking!");
@@ -79,7 +79,7 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
          *  Unsubscribe with 'On.Class.Method -= CustomClass.CustomMethod;' for each method you're patching.
          */
 
-        On.ShoppingCart.AddItemToCart -= ExampleShoppingCartPatch.AddItemToCartPostfix;
+        On.ShoppingCart.AddItemToCart -= ExampleShoppingCartPatch.AddItemToCart;
 #else
         foreach (var detour in Hooks)
             detour.Undo();

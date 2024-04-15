@@ -8,9 +8,9 @@ namespace MonoMod._ModTemplate.Hooks;
 public class ExampleShoppingCartPatch
 {
 #if (UseHookGen)
-    internal static void AddItemToCartPostfix(On.ShoppingCart.orig_AddItemToCart original, ShoppingCart self, ShopItem item)
+    internal static void AddItemToCart(On.ShoppingCart.orig_AddItemToCart original, ShoppingCart self, ShopItem item)
 #else
-    internal static void AddItemToCartPostfix(Action<ShoppingCart, ShopItem> original, ShoppingCart self, ShopItem item)
+    internal static void AddItemToCart(Action<ShoppingCart, ShopItem> original, ShoppingCart self, ShopItem item)
 #endif
     {
         // Call Original Method
