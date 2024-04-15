@@ -6,7 +6,7 @@ This template is forked from Xilophor's LC Mod Templates, [available here](https
 
 ## Acknowledgements
 
-* [@funlennysub](https://github.com/funlennysub) for the Russian localization.
+* [@funlennysub](https://github.com/funlennysub) & [@cyclozarin](https://github.com/cyclozarin) for the Russian localization.
 
 ## Installation
 
