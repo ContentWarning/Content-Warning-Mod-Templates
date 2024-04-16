@@ -36,8 +36,6 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
         Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
     }
 
-    
-
     internal static void HookAll()
     {
         Logger.LogDebug("Hooking...");
