@@ -1,20 +1,56 @@
 using System;
 #if (!UseHookGen)
 using HarmonyLib;
+using MonoMod__ModTemplate;
 #endif
 
-namespace MonoMod._ModTemplate.Hooks;
+namespace MonoMod._ModTemplate.Patches;
 
 public class ExampleShoppingCartPatch
 {
-#if (UseHookGen)
-    internal static void AddItemToCart(On.ShoppingCart.orig_AddItemToCart original, ShoppingCart self, ShopItem item)
+    internal static void Init()
+    {
+        /*
+#if (MMHOOKLocation != "")
+         *  Subscribe with 'On.Namespace.Type.Method += CustomMethod;' for each method you're patching.
+         *  Or if you are writing an ILHook, use 'IL.' instead of 'On.'
+         *  Note that not all types are in a namespace, especially in Unity games.
 #else
-    internal static void AddItemToCart(Action<ShoppingCart, ShopItem> original, ShoppingCart self, ShopItem item)
+         *  Add to the Hooks list for each method you're patching with:
+         *  
+#if (PublicizeGameAssemblies)
+         *  Hooks.Add(new Hook(
+         *      typeof(Class).GetMethod(nameof(Class.Method), AccessTools.allDeclared),
+         *      CustomClass.CustomMethod));
+#else
+         *  Hooks.Add(new Hook(
+         *      typeof(Class).GetMethod("Method", AccessTools.allDeclared),
+         *      CustomClass.CustomMethod));
+#endif
+#endif
+         */
+
+#if (UseHookGen)
+        On.ShoppingCart.AddItemToCart += ShoppingCart_AddItemToCart;
+#else
+        Hooks.Add(new Hook(
+#if (PublicizeGameAssemblies)
+                typeof(ShoppingCart).GetMethod(nameof(ShoppingCart.AddItemToCart), AccessTools.allDeclared),
+#else
+                typeof(ShoppingCart).GetMethod("AddItemToCart", AccessTools.allDeclared),
+#endif
+                ExampleShoppingCartPatch.AddItemToCart));
+#endif
+    }
+
+#if (UseHookGen)
+    private static void ShoppingCart_AddItemToCart(On.ShoppingCart.orig_AddItemToCart orig, ShoppingCart self, ShopItem item)
+#else
+    private static void ShoppingCart_AddItemToCart(Action<ShoppingCart, ShopItem> orig, ShoppingCart self, ShopItem item)
 #endif
     {
-        // Call Original Method
-        original(self, item);
+        // Call the Trampoline for the Original method or another method in the Detour Chain if any exist
+        orig(self, item);
 
 #if (PublicizeGameAssemblies)
         /*

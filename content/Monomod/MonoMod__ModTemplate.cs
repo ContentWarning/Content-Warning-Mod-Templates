@@ -1,11 +1,14 @@
 using BepInEx;
 using BepInEx.Logging;
-#if (!UseHookGen)
+#if (UseHookGen)
+using System.Reflection;
+using MonoMod.RuntimeDetour.HookGen;
+#else
 using System.Collections.Generic;
 using MonoMod.RuntimeDetour;
 using HarmonyLib;
 #endif
-using MonoMod._ModTemplate.Hooks;
+using MonoMod__ModTemplate.Patches;
 
 namespace MonoMod._ModTemplate;
 
@@ -28,58 +31,33 @@ public class MonoMod__ModTemplate : BaseUnityPlugin
         Logger = base.Logger;
         Instance = this;
 
-        Hook();
+        HookAll();
 
         Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
     }
 
-    internal static void Hook()
+    
+
+    internal static void HookAll()
     {
         Logger.LogDebug("Hooking...");
 
-        /*
-#if (MMHOOKLocation != "")
-         *  Subscribe with 'On.Class.Method += CustomClass.CustomMethod;' for each method you're patching.
-#else
-         *  Add to the Hooks list for each method you're patching with:
-         *
-#if (PublicizeGameAssemblies)
-         *  Hooks.Add(new Hook(
-         *      typeof(Class).GetMethod(nameof(Class.Method), AccessTools.allDeclared),
-         *      CustomClass.CustomMethod));
-#else
-         *  Hooks.Add(new Hook(
-         *      typeof(Class).GetMethod("Method", AccessTools.allDeclared),
-         *      CustomClass.CustomMethod));
-#endif
-#endif
-         */
-
-#if (UseHookGen)
-        On.ShoppingCart.AddItemToCart += ExampleShoppingCartPatch.AddItemToCart;
-#else
-        Hooks.Add(new Hook(
-#if (PublicizeGameAssemblies)
-                typeof(ShoppingCart).GetMethod(nameof(ShoppingCart.AddItemToCart), AccessTools.allDeclared),
-#else
-                typeof(ShoppingCart).GetMethod("AddItemToCart", AccessTools.allDeclared),
-#endif
-                ExampleShoppingCartPatch.AddItemToCart));
-#endif
+        ExampleShoppingCartPatch.Init();
 
         Logger.LogDebug("Finished Hooking!");
     }
 
-    internal static void Unhook()
+    internal static void UnhookAll()
     {
         Logger.LogDebug("Unhooking...");
 
 #if (UseHookGen)
         /*
-         *  Unsubscribe with 'On.Class.Method -= CustomClass.CustomMethod;' for each method you're patching.
+         *  HookEndpointManager is from MonoMod.RuntimeDetour.HookGen, and is used by the MMHOOK assemblies.
+         *  We can unhook all methods hooked with HookGen using this.
+         *  Or we can unsubscribe specific patch methods with 'On.Namespace.Type.Method -= CustomMethod;'
          */
-
-        On.ShoppingCart.AddItemToCart -= ExampleShoppingCartPatch.AddItemToCart;
+        HookEndpointManager.RemoveAllOwnedBy(Assembly.GetExecutingAssembly());
 #else
         foreach (var detour in Hooks)
             detour.Undo();
