@@ -10,7 +10,7 @@ using MonoMod.RuntimeDetour.HookGen;
 using System.Collections.Generic;
 using MonoMod.RuntimeDetour;
 #endif
-using MonoMod__ModTemplate.Patches;
+using MonoMod._ModTemplate.Patches;
 
 namespace MonoMod._ModTemplate;
 

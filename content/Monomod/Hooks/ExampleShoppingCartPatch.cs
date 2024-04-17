@@ -11,7 +11,7 @@ public class ExampleShoppingCartPatch
     internal static void Init()
     {
         /*
-#if (MMHOOKLocation != "")
+#if (UseHookGen)
          *  Subscribe with 'On.Namespace.Type.Method += CustomMethod;' for each method you're patching.
          *  Or if you are writing an ILHook, use 'IL.' instead of 'On.'
          *  Note that not all types are in a namespace, especially in Unity games.
