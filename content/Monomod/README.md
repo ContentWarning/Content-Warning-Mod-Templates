@@ -1,4 +1,4 @@
-# Content Warning Harmony Template
+# Content Warning MonoMod Template
 
 Thank you for using the mod template! Here are a few tips to help you on your journey:
 
@@ -62,3 +62,19 @@ If you chose to do so, make sure you change the following line in the `BepInEx.c
 LogLevels = All
 ```
 
+## MonoMod
+
+This template uses MonoMod. For more specifics on how to use it, look at
+[the MonoMod Examples on lethal.wiki](https://lethal.wiki/dev/fundamentals/patching-code/monomod-examples) and
+[the unofficial MonoMod Documentation on lethal.wiki](https://lethal.wiki/dev/fundamentals/patching-code/monomod-documentation). Even though these resources are made for the Lethal Company Modding Wiki, they do apply for Content Warning modding.
+<!--#if (UseHookGen) -->
+Only things to note are that the CW modding community uses [AutoHookGenPatcher](https://thunderstore.io/c/content-warning/p/Hamunii/AutoHookGenPatcher/) instead of the older [HookGenPatcher](https://github.com/harbingerofme/Bepinex.Monomod.HookGenPatcher), and also that AutoHookGenPatcher already depends on [DetourContext.Dispose Fix](https://thunderstore.io/c/content-warning/p/Hamunii/DetourContext_Dispose_Fix/) on Thunderstore.
+
+See [AutoHookGenPatcher - Usage For Developers](https://github.com/Hamunii/BepInEx.MonoMod.AutoHookGenPatcher?tab=readme-ov-file#usage-for-developers) for information on how to generate MMHOOK files for assemblies other than `Assembly-CSharp.dll` or already referenced `MMHOOK` assemblies.
+
+### Notice
+[AutoHookGenPatcher](https://thunderstore.io/c/content-warning/p/Hamunii/AutoHookGenPatcher/) must be installed and set as a dependency on Thunderstore as it will generate the MMHOOK assemblies your plugin depends on.
+
+This can be done by adding the following dependency string in the dependencies of your manifest file when you upload your plugin to Thunderstore:
+`"Hamunii-AutoHookGenPatcher-1.0.3"`. Dependency strings for mods can be found on their Thunderstore pages. 
+<!--#endif -->
