@@ -7,6 +7,7 @@ This template is forked from Xilophor's LC Mod Templates, [available here](https
 ## Acknowledgements
 
 * [@funlennysub](https://github.com/funlennysub) & [@cyclozarin](https://github.com/cyclozarin) for the Russian localization.
+* [@Hamunii](https://github.com/Hamunii) for some MonoMod Template updates.
 
 ## Installation
 

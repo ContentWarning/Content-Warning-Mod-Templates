@@ -21,5 +21,7 @@
     "symbols/CopyPluginOnBuild/displayName": "Скопировать плагин после компиляции",
     "symbols/CopyPluginOnBuild/description": "Стоит ли копировать скомпилированный плагин в папку плагинов после компиляции.",
     "symbols/UseMinVer/displayName": "Использовать MinVer",
-    "symbols/UseMinVer/description": "Вместо того, чтобы менять версию мода вручную, использует MinVer для автоматического обновления версии исходя из тегов git (прим. `v1.2.3`). Включайте только в том случае, если вы используете git. (т.е. GitHub)"
+    "symbols/UseMinVer/description": "Вместо того, чтобы менять версию мода вручную, использует MinVer для автоматического обновления версии исходя из тегов git (прим. `v1.2.3`). Включайте только в том случае, если вы используете git. (т.е. GitHub)",
+    "symbols/GlobalPluginUsing/displayName": "Добавить глобальный using плагина",
+    "symbols/GlobalPluginUsing/description": "Добавляет глобальный using для главного плагина с алиасом \"Plugin\", поэтому Вы можете легко использовать Plugin.Logger."
 }
