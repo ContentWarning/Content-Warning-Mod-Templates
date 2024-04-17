@@ -147,7 +147,8 @@
                 "**/root/**",
                 "licenses/**",
                 "**/*.filelist",
-                "**/*.lock.json"
+                "**/*.lock.json",
+                "**/-.-"
             ],
             "modifiers": [
                 {
@@ -155,6 +156,10 @@
                     "exclude": [
                         "**/icon_128x128.png"
                     ]
+                },
+                {
+                    "condition": "DependOnHookGen == true",
+                    "include": [ "**/-.-" ]
                 }
             ]
         },

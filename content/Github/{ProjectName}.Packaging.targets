@@ -31,6 +31,17 @@
     </ItemGroup>
 
 <!--#endif -->
+<!--#if (DependOnHookGen) -->
+    <!-- Change MMHOOK Reference Location -->
+    <PropertyGroup Condition="$(CI) == 'true'">
+        <MMHOOK>$(ProjectDir)MMHOOK/</MMHOOK>
+        <MMHOOKManaged>$(MMHOOK)Managed/</MMHOOKManaged>
+        <MMHOOKplugins>$(MMHOOK)plugins/</MMHOOKplugins>
+        <MMHOOKpatchers>$(MMHOOK)patchers/</MMHOOKpatchers>
+        <MMHOOKcore>$(MMHOOK)core/</MMHOOKcore>
+    </PropertyGroup>
+
+<!--#endif -->
     <!-- Pack for Thunderstore -->
     <Target
         Name="ThunderstorePack"

@@ -10,7 +10,6 @@ There are a few more steps you need to take to fully prepare your project for Gi
 
 - [ ] Finish Project Setup
   - [ ] Install TCLI
-
     > Run the following commands in the ***project*** directory:
     >
     > ```shell
@@ -22,12 +21,16 @@ There are a few more steps you need to take to fully prepare your project for Gi
     > This will install the tcli tool which the GitHub workflow uses to upload to thunderstore.
 
   - [ ] Add Import to `{ProjectName}.csproj`
-
     > Add the following to your `{ProjectName}.csproj` file, within the `<Project>` area but outside any Item or Property Groups:
     >
     > ```xml
     > <Import Project="./{ProjectName}.Packaging.targets" />
     > ```
+<!--#if (DependOnHookGen) -->
+
+  - [ ] Copy `.../BepInEx/plugins/MMHOOK/` folder to `{Projectname}/MMHOOK/`
+    > This has to be done as the workflow needs a reference to the assemblies; but without these files existing in the repo, it will have no reference.
+<!--#endif -->
 
   - [ ] Change Icon
     > Change the template `icon.png` file in `/ts-assets/` to your mod's icon. Your icon must be `256px x 256px`, as that is what is used by Thunderstore.
