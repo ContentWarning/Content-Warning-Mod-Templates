@@ -9,7 +9,6 @@ using MonoMod.RuntimeDetour.HookGen;
 #else
 using System.Collections.Generic;
 using MonoMod.RuntimeDetour;
-using HarmonyLib;
 #endif
 using MonoMod__ModTemplate.Patches;
 

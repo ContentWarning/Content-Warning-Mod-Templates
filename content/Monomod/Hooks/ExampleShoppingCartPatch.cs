@@ -33,13 +33,17 @@ public class ExampleShoppingCartPatch
 #if (UseHookGen)
         On.ShoppingCart.AddItemToCart += ShoppingCart_AddItemToCart;
 #else
-        AnotherExampleMod.Hooks.Add(new Hook(
+#if (GlobalPluginUsing)
+        Plugin.Hooks.Add(new Hook(
+#else
+        MonoMod__ModTemplate.Hooks.Add(new Hook(
+#endif
 #if (PublicizeGameAssemblies)
                 typeof(ShoppingCart).GetMethod(nameof(ShoppingCart.AddItemToCart), AccessTools.allDeclared),
 #else
                 typeof(ShoppingCart).GetMethod("AddItemToCart", AccessTools.allDeclared),
 #endif
-                ExampleShoppingCartPatch.ShoppingCart_AddItemToCart));
+                ShoppingCart_AddItemToCart));
 #endif
     }
 
