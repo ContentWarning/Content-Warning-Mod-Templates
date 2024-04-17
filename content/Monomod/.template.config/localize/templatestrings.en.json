@@ -21,5 +21,7 @@
     "symbols/CopyPluginOnBuild/displayName": "Copy Plugin on Build",
     "symbols/CopyPluginOnBuild/description": "Whether the built assembly should be copied to your plugins directory after building.",
     "symbols/UseMinVer/displayName": "Use MinVer",
-    "symbols/UseMinVer/description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub)."
+    "symbols/UseMinVer/description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub).",
+    "symbols/GlobalPluginUsing/displayName": "Add Global Plugin Using",
+    "symbols/GlobalPluginUsing/description": "Adds a global using for the main class with alias 'Plugin' so you can easily use 'Plugin.Logger'."
 }

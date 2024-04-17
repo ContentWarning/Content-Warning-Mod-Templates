@@ -165,6 +165,13 @@
             "description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub).",
             "datatype": "bool",
             "defaultValue": "false"
+        },
+        "GlobalPluginUsing": {
+            "type": "parameter",
+            "displayName": "Add Global Plugin Using",
+            "description": "Adds a global using for the main class with alias 'Plugin' so you can easily use 'Plugin.Logger'.",
+            "datatype": "bool",
+            "defaultValue": "false"
         }
     },
     "sources": [

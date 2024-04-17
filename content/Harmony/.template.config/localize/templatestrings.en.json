@@ -17,5 +17,7 @@
     "symbols/PublicizeGameAssemblies/displayName": "Publicize Game Assemblies",
     "symbols/PublicizeGameAssemblies/description": "Publicize the Game Assemblies to access internal or private classes, fields, methods, and properties.",
     "symbols/UseMinVer/displayName": "Use MinVer",
-    "symbols/UseMinVer/description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub)."
+    "symbols/UseMinVer/description": "Instead of manually changing the mod version, use MinVer and automatically update the mod version based off of git tags (ie 'v1.2.3'). Only enable if you are using git vsc (ie GitHub).",
+    "symbols/GlobalPluginUsing/displayName": "Add Global Plugin Using",
+    "symbols/GlobalPluginUsing/description": "Adds a global using for the main class with alias 'Plugin' so you can easily use 'Plugin.Logger'."
 }
