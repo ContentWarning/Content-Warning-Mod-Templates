@@ -1,3 +1,6 @@
+#if (GlobalPluginUsing)
+global using Plugin = MonoMod._ModTemplate.MonoMod__ModTemplate;
+#endif
 using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
