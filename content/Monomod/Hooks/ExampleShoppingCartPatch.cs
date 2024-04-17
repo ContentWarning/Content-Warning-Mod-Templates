@@ -1,7 +1,7 @@
 using System;
 #if (!UseHookGen)
 using HarmonyLib;
-using MonoMod__ModTemplate;
+using MonoMod.RuntimeDetour;
 #endif
 
 namespace MonoMod._ModTemplate.Patches;
@@ -33,13 +33,13 @@ public class ExampleShoppingCartPatch
 #if (UseHookGen)
         On.ShoppingCart.AddItemToCart += ShoppingCart_AddItemToCart;
 #else
-        Hooks.Add(new Hook(
+        AnotherExampleMod.Hooks.Add(new Hook(
 #if (PublicizeGameAssemblies)
                 typeof(ShoppingCart).GetMethod(nameof(ShoppingCart.AddItemToCart), AccessTools.allDeclared),
 #else
                 typeof(ShoppingCart).GetMethod("AddItemToCart", AccessTools.allDeclared),
 #endif
-                ExampleShoppingCartPatch.AddItemToCart));
+                ExampleShoppingCartPatch.ShoppingCart_AddItemToCart));
 #endif
     }
 
