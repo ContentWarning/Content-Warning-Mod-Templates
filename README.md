@@ -91,7 +91,7 @@ The GitHub Workflow has quite a few parameters, listed below:
   - Whether your mod requires AutoHookGenPatcher. This is usually the case when you are using MonoMod.
   - Default: `false`
 
-`-U`: Use a Changleog
+`-U`: Use a Changelog
   - Whether you want to use a CHANGELOG file. Will be created if true.
   - Default: `false`
 
