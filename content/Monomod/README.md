@@ -67,7 +67,7 @@ LogLevels = All
 This template uses MonoMod. For more specifics on how to use it, look at
 [the MonoMod Examples on lethal.wiki](https://lethal.wiki/dev/fundamentals/patching-code/monomod-examples) and
 [the unofficial MonoMod Documentation on lethal.wiki](https://lethal.wiki/dev/fundamentals/patching-code/monomod-documentation). Even though these resources are made for the Lethal Company Modding Wiki, they do apply for Content Warning modding.
-<!--#if (!UseHookGen) -->
+<!--#if (UseHookGen) -->
 Only things to note are that the CW modding community uses [AutoHookGenPatcher](https://thunderstore.io/c/content-warning/p/Hamunii/AutoHookGenPatcher/) instead of the older [HookGenPatcher](https://github.com/harbingerofme/Bepinex.Monomod.HookGenPatcher), and also that AutoHookGenPatcher already depends on [DetourContext.Dispose Fix](https://thunderstore.io/c/content-warning/p/Hamunii/DetourContext_Dispose_Fix/) on Thunderstore.
 
 See [AutoHookGenPatcher - Usage For Developers](https://github.com/Hamunii/BepInEx.MonoMod.AutoHookGenPatcher?tab=readme-ov-file#usage-for-developers) for information on how to generate MMHOOK files for assemblies other than `Assembly-CSharp.dll` or already referenced `MMHOOK` assemblies.
