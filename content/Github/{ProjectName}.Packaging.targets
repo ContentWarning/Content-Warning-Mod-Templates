@@ -41,6 +41,11 @@
         <MMHOOKcore>$(MMHOOK)core/</MMHOOKcore>
     </PropertyGroup>
 
+    <!-- Copy MMHOOK Files for GitHub Actions -->
+    <Target Name="CopyFiles" BeforeTargets="CollectPackageReferences" Condition="$(CI) != 'true'">
+        <Copy SourceFiles="$(MMHOOK)" DestinationFolder="$(ProjectDir)MMHOOK/"/>
+    </Target>
+
 <!--#endif -->
     <!-- Pack for Thunderstore -->
     <Target

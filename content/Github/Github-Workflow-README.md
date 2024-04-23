@@ -28,8 +28,10 @@ There are a few more steps you need to take to fully prepare your project for Gi
     > ```
 <!--#if (DependOnHookGen) -->
 
-  - [ ] Copy `.../BepInEx/plugins/MMHOOK/` folder to `{Projectname}/MMHOOK/`
-    > This has to be done as the workflow needs a reference to the assemblies; but without these files existing in the repo, it will have no reference.
+  - [ ] Build Project or Copy `.../BepInEx/plugins/MMHOOK/` folder to `{Projectname}/MMHOOK/`
+    > This has to be done as the workflow needs a reference to the MMHOOK assemblies; but without these files existing in the repo, it will have no reference.
+    >
+    > Building the project will automatically copy these files to your project.
 <!--#endif -->
 
   - [ ] Change Icon
